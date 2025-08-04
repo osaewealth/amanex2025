@@ -40,13 +40,13 @@ export default function About() {
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-coty-mint-light to-coty-gray-light pt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center min-h-screen">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl lg:text-7xl font-bold text-coty-navy leading-tight mb-8">
+          <h1 className="text-5xl lg:text-7xl font-bold text-coty-navy leading-tight mb-8">
               WHO<br />
               <span className="text-coty-navy">WE ARE</span>
-            </h1>
+          </h1>
             <p className="text-xl lg:text-2xl text-coty-gray max-w-3xl mx-auto lg:mx-0">
-              Fearless. Forward. You. We are one of the world's largest beauty companies with iconic brands across fragrance, color cosmetics, and skin & body care.
-            </p>
+            Fearless. Forward. You. We are one of the world's largest beauty companies with iconic brands across fragrance, color cosmetics, and skin & body care.
+          </p>
             <div className="mt-12 text-coty-gray font-medium flex items-center justify-center lg:justify-start">
               <div className="w-8 h-px bg-coty-gray mr-3"></div>
               <span className="text-sm tracking-wide">DISCOVER OUR STORY</span>

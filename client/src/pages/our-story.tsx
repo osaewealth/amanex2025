@@ -241,7 +241,7 @@ export default function OurStory() {
               >
                 <div className="mb-6 flex justify-center">
                   <div className="p-4 rounded-full bg-gradient-to-br from-gray-50 to-blue-50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110">
-                    {value.icon}
+                  {value.icon}
                   </div>
                 </div>
                 <h3 className="text-xl font-bold text-coty-navy mb-4">{value.title}</h3>
@@ -356,7 +356,7 @@ export default function OurStory() {
                             transitionDelay: `${index * 300 + 600}ms`
                           }}></div>
                         </div>
-                      </Card>
+                    </Card>
                     </div>
                   </div>
                 </div>

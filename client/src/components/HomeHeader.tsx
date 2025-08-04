@@ -53,7 +53,7 @@ export default function HomeHeader() {
               <img
                 src="/src/assets/logo.png"
                 alt="Amanex Logo"
-                className="h-16 w-auto"
+                className="h-20 lg:h-24 w-auto"
               />
             </a>
           </div>

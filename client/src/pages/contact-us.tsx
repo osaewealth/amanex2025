@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowRight, Phone, Mail, MapPin, Clock, Search, X, Briefcase, Globe, ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,29 +8,43 @@ import Footer from "@/components/Footer";
 import StandardHeader from "@/components/StandardHeader";
 
 export default function ContactUs() {
+  const contactInfoRefs = useRef<(HTMLDivElement | null)[]>([]);
+
   const contactInfo = [
     {
-      icon: <MapPin className="h-6 w-6" />,
+      icon: <MapPin className="h-8 w-8" />,
       title: "Address",
       content: "4TH KINGDOM RD, OSHIYIE, ACCRA\nP.O.BOX ML 980, MALLAM",
-      link: "https://maps.google.com"
+      link: "https://maps.google.com",
+      color: "from-blue-500 to-blue-600",
+      bgColor: "bg-blue-50",
+      iconBg: "bg-blue-500"
     },
     {
-      icon: <Phone className="h-6 w-6" />,
+      icon: <Phone className="h-8 w-8" />,
       title: "Phone",
       content: "TEL: +233 303 943 842\nMobile: +233 550 434 576\nWhatsApp: 0 303 943 842",
-      link: "tel:+233303943842"
+      link: "tel:+233303943842",
+      color: "from-green-500 to-green-600",
+      bgColor: "bg-green-50",
+      iconBg: "bg-green-500"
     },
     {
-      icon: <Mail className="h-6 w-6" />,
+      icon: <Mail className="h-8 w-8" />,
       title: "Email",
       content: "amanexcomltd@gmail.com",
-      link: "mailto:amanexcomltd@gmail.com"
+      link: "mailto:amanexcomltd@gmail.com",
+      color: "from-purple-500 to-purple-600",
+      bgColor: "bg-purple-50",
+      iconBg: "bg-purple-500"
     },
     {
-      icon: <Clock className="h-6 w-6" />,
+      icon: <Clock className="h-8 w-8" />,
       title: "Business Hours",
-      content: "Mon - Fri: 8:00 AM - 6:00 PM\nSaturday: 9:00 AM - 3:00 PM\nSunday: Closed"
+      content: "Mon - Fri: 8:00 AM - 6:00 PM\nSaturday: 9:00 AM - 3:00 PM\nSunday: Closed",
+      color: "from-orange-500 to-orange-600",
+      bgColor: "bg-orange-50",
+      iconBg: "bg-orange-500"
     }
   ];
 
@@ -52,6 +66,29 @@ export default function ContactUs() {
       phone: "0303 943 842"
     }
   ];
+
+  // Scroll-triggered animations for contact cards
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.classList.add('animate-in', 'slide-in-from-bottom-4', 'duration-700');
+              entry.target.classList.remove('opacity-0', 'translate-y-8');
+            }, index * 200); // Stagger the animations
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    contactInfoRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -85,33 +122,65 @@ export default function ContactUs() {
       </section>
 
       {/* Contact Information Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-coty-navy mb-4">Get In Touch</h2>
-            <p className="text-lg text-coty-gray max-w-3xl mx-auto">
+            <h2 className="text-4xl font-bold text-coty-navy mb-4 animate-in slide-in-from-bottom-4 duration-700">
+              Get In Touch
+            </h2>
+            <p className="text-lg text-coty-gray max-w-3xl mx-auto animate-in slide-in-from-bottom-4 duration-700 delay-200">
               We'd love to hear from you. Reach out to us through any of the following channels.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {contactInfo.map((info, index) => (
-              <Card key={index} className="bg-white rounded-xl p-6 text-center hover:shadow-xl transition-shadow duration-300">
-                <div className="text-coty-navy mb-4 flex justify-center">
-                  {info.icon}
-                </div>
-                <h3 className="text-xl font-bold text-coty-navy mb-3">{info.title}</h3>
-                <div className="text-coty-gray whitespace-pre-line">
-                  {info.link ? (
-                    <a href={info.link} className="hover:text-coty-navy transition-colors duration-200">
-                      {info.content}
-                    </a>
-                  ) : (
-                    info.content
-                  )}
-                </div>
-              </Card>
+              <div
+                key={index}
+                ref={(el) => (contactInfoRefs.current[index] = el)}
+                className="opacity-0 translate-y-8 transition-all duration-700"
+              >
+                <Card className="group relative bg-white rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-gray-100 h-full flex flex-col justify-between">
+                  {/* Subtle background gradient on hover */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${info.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-xl`}></div>
+                  
+                  {/* Icon with subtle animation */}
+                  <div className="relative mb-4 flex justify-center">
+                    <div className={`w-12 h-12 rounded-full ${info.iconBg} flex items-center justify-center text-white group-hover:scale-105 transition-transform duration-300 shadow-md`}>
+                      {info.icon}
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 flex flex-col justify-center">
+                    <h3 className="text-lg font-bold text-coty-navy mb-3 group-hover:text-coty-gold transition-colors duration-300">
+                      {info.title}
+                    </h3>
+                    
+                    <div className="text-sm text-coty-gray whitespace-pre-line group-hover:text-coty-navy transition-colors duration-300">
+                      {info.link ? (
+                        <a href={info.link} className="hover:text-coty-gold transition-colors duration-200">
+                          {info.content}
+                        </a>
+                      ) : (
+                        info.content
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Subtle bottom border */}
+                  <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${info.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-b-xl`}></div>
+                </Card>
+              </div>
             ))}
+          </div>
+
+          {/* Response time indicator */}
+          <div className="mt-12 text-center">
+            <div className="inline-flex items-center space-x-3 bg-white rounded-full px-6 py-3 shadow-md animate-in slide-in-from-bottom-4 duration-700 delay-1000">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm text-coty-navy font-medium">We typically respond within 24 hours</span>
+            </div>
           </div>
         </div>
       </section>
